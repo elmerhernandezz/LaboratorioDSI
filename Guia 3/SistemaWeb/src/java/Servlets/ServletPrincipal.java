@@ -81,7 +81,29 @@ public class ServletPrincipal extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                String accion = request.getParameter("accion");
+        
+        if(accion.equals("Login")){
+            String usuario = request.getParameter("tfUsuario");
+            String contrasenia = request.getParameter("tfContrasenia");
+            
+            try(PrintWriter print = response.getWriter()){
+                if(usuario.equals("admin") && contrasenia.equals("root")){
+                    request.getRequestDispatcher("/index.html").forward(request, response);
+                }else{
+                    print.println("<!DOCTYPE html>");
+                    print.println("<html>");
+                    print.println("<head>");
+                    print.println("<title>Login Sistema Panaderia</title>");
+                    print.println("</head>");
+                    print.println("<body>");
+                    print.println("<h1>ERROR: El usuario o la contraseña son erróneos.</h1>");
+                    print.println("</body>");
+                    print.println("</html>");
+                    
+                }
+            }
+        }
     }
 
     /**
